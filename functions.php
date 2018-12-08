@@ -30,7 +30,10 @@ final class Samrt_Site_Class {
             
             // Load js
 			add_action( 'wp_enqueue_scripts', array( 'Samrt_Site_Class', 'load_js' ) );
-        }
+
+			// disable the admin bar
+			show_admin_bar(false);
+		}
     }
 
     /**
@@ -40,6 +43,8 @@ final class Samrt_Site_Class {
 		// Include Paths
 		define( 'INC_DIR', ROOT_DIR .'/inc/' );
 		define( 'INC_URI', ROOT_URI .'/inc/' );
+		define( 'CSS_URI', INC_URI .'css/' );
+		define( 'JS_URI', INC_URI .'js/' );
 	}
 
 	/**
@@ -54,16 +59,31 @@ final class Samrt_Site_Class {
 	 * Load all css needed for the front-end
 	 */
 	public static function load_css() {
-         // all the bootstrap css in cdn
-         wp_enqueue_style( 'bootstrap', '//stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' );
+		// All the bootstrap css in cdn
+		wp_enqueue_style( 'bootstrap', '//stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' );
+
+		// font-awesome css in cdn
+		wp_enqueue_style( 'font-awesome', '//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
+		
+		// Site default css
+		wp_enqueue_style( 'style', get_stylesheet_uri());
+
+		// Site main style css
+		wp_enqueue_style( 'main_style', CSS_URI.'main_style.css' );
+
+		// Site responsive style css
+		wp_enqueue_style( 'responsive', CSS_URI.'responsive.css' );
     }
 
 	/**
 	 * Load all js needed for the front-end
 	 */
 	public static function load_js() {
-        // all the bootstrap javascript in cdn
-        wp_enqueue_script( 'bootstrap-js', '//stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', array('jquery'), true );
+        // All the bootstrap javascript in cdn
+		wp_enqueue_script( 'bootstrap-js', '//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js', array('jquery'),  false, true );
+
+		// Site main js
+		wp_enqueue_script( 'main_func', JS_URI.'main_func.js', array('jquery'),  false, true );
     }
 }
 
